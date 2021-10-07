@@ -1,6 +1,6 @@
 import './App.css';
 
-import {  getAuth, signInWithPopup,GoogleAuthProvider,GithubAuthProvider } from "firebase/auth";
+import {  getAuth, signInWithPopup,GoogleAuthProvider,GithubAuthProvider,signOut } from "firebase/auth";
 import initializeAuthentication from './Firebase/Firebase.initialize';
 import { useState } from 'react';
 initializeAuthentication();
@@ -45,11 +45,24 @@ const handleGithubSignIn=()=>{
 const buttonStyles={
   backgroundColor:'orange',padding:'10px',border:'2px solid gray',borderRadius:'5px',marginTop:'10px',cursor:'pointer'
 };
+const handleSignOut =()=>{
+ signOut(auth)
+ .then(()=>{
+   //sign out korar pore toh user take state er moddhe rekhe dile ar hoilo na. Tai sign out korar pore user take empty kore dilam amra. 
+   setUser({})
+ })
+}
   return (
     <div className="App">
-     <button style={buttonStyles} onClick={handleGoogleSignIn}>Google sign in</button> <br/>
+
+    {!user.name? <div>
+    <button style={buttonStyles} onClick={handleGoogleSignIn}>Google sign in</button> <br/>
      <button style={buttonStyles} onClick={handleGithubSignIn}>Github sign in</button>
      <br/>
+    </div>:   <button style={buttonStyles} onClick={handleSignOut}>Sign out</button>
+    }
+    
+   
      {
        user.name && <div>
          <h2>Welcome {user.name}</h2>
