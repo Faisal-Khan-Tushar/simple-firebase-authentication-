@@ -1,23 +1,23 @@
-import {getAuth,signInWithPopup,GoogleAuthProvider} from 'firebase/auth';
 import './App.css';
+
+import {  getAuth, signInWithPopup,GoogleAuthProvider } from "firebase/auth";
 import initializeAuthentication from './Firebase/Firebase.initialize';
 initializeAuthentication();
-const provider =new GoogleAuthProvider;
+const provider = new GoogleAuthProvider();
 
 function App() {
-  const handleGoogleSignIn=()=>{
-    //5 number step ta dekhe dekhe kortesi.
+const handleGoogleSignIn=()=>{
   const auth=getAuth();
-  //signInWithProvider ke amader auth ar provider ta pass kore dite hobe. 
- signInWithPopup(auth,provider)
- .then(result=>{
-  const user =result.user;
-  console.log(user);
- })
-  }
+  signInWithPopup(auth,provider)
+  .then(result=>{
+    //result er moddhei ekjon user name ache tai oita ami user variable e niye ashlam.
+    const user=result.user;
+    console.log(user)
+  })
+}
   return (
     <div className="App">
-    <button onClick={handleGoogleSignIn}>Google Sign in</button>
+     <button onClick={handleGoogleSignIn}>Google sign in</button>
     </div>
   );
 }
